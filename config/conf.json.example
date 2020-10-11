@@ -2,6 +2,6 @@
   "username": "username",
   "password": "password",
   "db_link": "link_to_the_database",
-  "db": "db_name",
+  "db": "db_name"
 }
 
