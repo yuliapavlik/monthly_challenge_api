@@ -1,20 +1,21 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var cors = require("cors");
+let createError = require("http-errors");
+let express = require("express");
+let path = require("path");
+let cookieParser = require("cookie-parser");
+let logger = require("morgan");
+let cors = require("cors");
 const bodyParser = require("body-parser");
 const user = require("./routes/user");
-var indexRouter = require("./routes/index");
-var userRouter = require("./routes/user");
-var testAPIRouter = require("./routes/testAPI");
+let indexRouter = require("./routes/index");
+let userRouter = require("./routes/user");
 const InitiateMongoServer = require("./config/db");
+// PORT
+const PORT = process.env.PORT || 4000;
 
 // Initiate Mongo Server
 InitiateMongoServer();
 
-var app = express();
+let app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -32,7 +33,6 @@ app.use(bodyParser.json());
 
 app.use("/", indexRouter);
 app.use("/user", userRouter);
-app.use("/testAPI", testAPIRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -48,6 +48,10 @@ app.use(function(err, req, res, next) {
     // render the error page
     res.status(err.status || 500);
     res.render("error");
+});
+
+app.listen(PORT, (req, res) => {
+    console.log(`Server Started at PORT ${PORT}`);
 });
 
 module.exports = app;
