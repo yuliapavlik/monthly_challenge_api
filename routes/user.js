@@ -19,9 +19,7 @@ router.post(
             .not()
             .isEmpty(),
         check("email", "Please enter a valid email").isEmail(),
-        check("password", "Please enter a valid password").isLength({
-            min: 6
-        })
+        check("password", "Please enter a valid password").isLength({min: 6})
     ],
     async (req, res) => {
         const errors = validationResult(req);
@@ -50,6 +48,7 @@ router.post(
 
             const salt = await bcrypt.genSalt(10);
             user.password = await bcrypt.hash(password, salt);
+            user.createdAt = Date.now();
 
             await user.save();
 
@@ -106,10 +105,14 @@ router.post(
                     message: "User Not Exist"
                 });
 
-            const isMatch = await bcrypt.compare(password, user.password);
+            // TODO switch to the bcrypt when sign up will be implemented
+            // const isMatch = await bcrypt.compare(password, user.password);
+            const isMatch = password === user.password
             if (!isMatch)
+                // TODO checkout debug purposses
                 return res.status(400).json({
-                    message: "Incorrect Password !"
+                    message: `DEBUG purposses. 
+                    Incorrect Password! User passwd: ${user.password}, Input passwd: ${password}`
                 });
 
             const payload = {

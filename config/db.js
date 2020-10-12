@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
 const fs = require("fs");
 const file = "./config/conf.json"
-var jsonData = null
-var MONGOURI = null
+let MONGOURI = null
 
 
 const InitiateMongoServer = async () => {
