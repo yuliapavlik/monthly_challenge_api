@@ -5,9 +5,9 @@ let cookieParser = require("cookie-parser");
 let logger = require("morgan");
 let cors = require("cors");
 const bodyParser = require("body-parser");
-const user = require("./routes/user");
 let indexRouter = require("./routes/index");
 let userRouter = require("./routes/user");
+let user2Router = require("./routes/user2");
 const InitiateMongoServer = require("./config/db");
 // PORT
 const PORT = process.env.PORT || 4000;
@@ -33,6 +33,7 @@ app.use(bodyParser.json());
 
 app.use("/", indexRouter);
 app.use("/user", userRouter);
+app.use("/user", user2Router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
