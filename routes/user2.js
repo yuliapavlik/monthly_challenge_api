@@ -39,16 +39,11 @@ router.post(
 
             await user.save();
 
-            const payload = {
-                user: {
-                    id: user.id
-                }
-            };
-
         } catch (err) {
             console.log(err.message);
             res.status(500).send("Error in Saving");
         }
+        res.status(200).send('User created!!!')
     }
 );
 

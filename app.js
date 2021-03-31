@@ -2,6 +2,8 @@ let createError = require("http-errors");
 let express = require("express");
 let path = require("path");
 let cookieParser = require("cookie-parser");
+let multer  = require('multer')
+let upload = multer();
 let logger = require("morgan");
 let cors = require("cors");
 const bodyParser = require("body-parser");
@@ -25,11 +27,15 @@ app.set("view engine", "jade");
 app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+// for parsing multipart/form-data
+app.use(upload.array());
 app.use(express.static(path.join(__dirname, "public")));
+
 // Middleware
 app.use(bodyParser.json());
+
 
 app.use("/", indexRouter);
 app.use("/user", userRouter);
